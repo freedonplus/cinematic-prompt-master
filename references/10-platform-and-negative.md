@@ -55,10 +55,24 @@
 ### Seedance 2.0（即梦，本技能主平台）
 - 全中文；`@图片1`–`@图片9` / `@视频1`–`@视频3` / `@音频1`–`@音频3`；素材合计 ≤12；单次 ≤15s；**禁写实真人面部素材**。
 
-### 跨平台迁写三栏（同一画面）
+### MiniMax H3 / 海螺 Hailuo 3.0（第二主平台）
+- 语法：**结构化字段 + 方括号运镜 + 时间戳**，不是一段散文。三个字段名逐字写：`integrated_multimodal_description` / `overall_soundscape` / `non_diegetic_music`。
+- 运镜：`[Push in]` `[Pull out]` `[Truck left]` `[Pan right]` `[Pedestal up]` `[Tilt down]` `[Zoom in]` `[Shake]` `[Tracking shot]` `[Static shot]`；一括号 ≤3 个，全镜 2–3 个线索。
+- 参数：4–15s（默认 6）、2K/768P、24fps、原生立体声、prompt ≤2000 字符、参考 9 图/3 视频/3 音频。
+- 负面：**没有负面字段**，改写成「保留契约 + 一句 Avoid 短列表」（见下文第五节补充与 `12-platform-minimax-h3.md` 第十节）。
+
+### 跨平台迁写四栏（同一画面）
 - MJ：`young woman with umbrella in a rainy alley, cinematic teal-and-orange, looking back --ar 2:3 --style raw --no cartoon`
 - SD：正向 `(masterpiece) woman with umbrella, rainy alley, looking back, cinematic teal-orange` + 负向 `cartoon, deformed hands, watermark, extra fingers`
 - Sora/Veo：`A young woman with a translucent umbrella walks slowly through a rainy stone alley. She stops, turns her head to look back at the camera while drizzle falls. Cinematic teal-and-orange grade, 8 seconds.`
+- MiniMax H3：
+```text
+integrated_multimodal_description:
+[Shot 1] 雨后石板巷，青灰墙面泛潮，霓虹招牌在远处失焦。一位撑透明伞的少女缓步前行，伞面水珠随步幅滑落，[Tracking shot]。
+[Shot 2] At 00:04.000，她停步，收伞甩水，回眸看向镜头，[Push in]，青橙色调，35mm 细颗粒。
+overall_soundscape: 巷内滴水声、伞骨收拢的金属轻响、鞋跟踩过浅水的细声。
+non_diegetic_music: N/A
+```
 - 可灵/即梦：`一位撑透明伞的少女在雨后石板巷中缓步前行，行至中段停步回眸看向镜头，细雨轻落，电影感青橙色调，时长8秒`
 
 ---

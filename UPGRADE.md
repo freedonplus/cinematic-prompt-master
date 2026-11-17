@@ -37,12 +37,13 @@ seedance 原有的"品质锚定 / 大气连贯声明 / 光影三层 / 收束句 
 
 ```
 cinematic-prompt-master/
-├── SKILL.md                       # 语料优先级协议 + 七层公式 + 三法则 + 六模式 + 工作流 + 质检
+├── SKILL.md                       # 语料协议 + 七层公式 + 三法则 + 平台矩阵 + 八模式 + 升维 + 站位 + 质检
 ├── UPGRADE.md                     # 本文件
 ├── master/
-│   └── AI图像视频生成提示词_超细分主文档.md   # P0 权威语料（26 卷 / 7626 行，与原版同哈希）
+│   ├── AI图像视频生成提示词_超细分主文档.md   # P0 权威语料（26 卷 / 7626 行，与原版同哈希）
+│   └── prompt-atlas.json          # P1.5 可填槽位词库（279 叶子 / 7400+ 枚举）
 ├── references/
-│   ├── 00-master-index.md         # 总索引：26 卷地图 / 按词路由 / Grep 指令集 / 兜底规则
+│   ├── 00-master-index.md         # 总索引：26 卷地图 / 按词路由 / Grep / atlas 入口 / 兜底
 │   ├── 01-style-and-medium.md     风格母语 / 介质 / 三叠法
 │   ├── 02-culture-themes.md       古风武侠 / 赛博科幻 / 和风 / 港风民国 / 恐怖
 │   ├── 03-subject-and-consistency.md 五官 / 表情眼神 / 人体质感 / 三视图一致性
@@ -52,10 +53,14 @@ cinematic-prompt-master/
 │   ├── 07-video-motion.md         运镜 / 速度 / 动作 / 打斗 / 物理一致性 / 分段
 │   ├── 08-sound-and-edit.md       音景 / 人声 / 安静 / 剪辑 / 转场
 │   ├── 09-fx-and-animation.md     特效 FX 控量 / 动画载体与专属符号
-│   ├── 10-platform-and-negative.md 画幅 / 平台语法壳 / 八域负面
-│   └── 11-modes-and-recipes.md    六模式 / 十二张配方卡 / 变奏矩阵 / 混搭规则 / 输出形态
+│   ├── 10-platform-and-negative.md 画幅 / 平台语法壳（含 H3 四栏迁写）/ 八域负面
+│   ├── 11-modes-and-recipes.md    八模式 / 十二张配方卡 / 变奏矩阵 / 混搭规则 / 输出形态
+│   ├── 12-platform-minimax-h3.md  H3 五模式 / 三段式·六段式 / 方括号运镜 / 音轨 / 失败清单
+│   ├── 13-staging-and-axis.md     站位轴线 / 机位表 / 侧位 / 接力 / 参考链 / 站位卡
+│   └── 14-prompt-atlas.md         atlas 协议 / 结构索引 / 分卷→七层映射 / 用法
 └── scripts/
-    └── lookup-master.ps1          主文档检索：-Outline / -Volume / -Query
+    ├── lookup-master.ps1          主文档检索：-Outline / -Volume / -Query
+    └── atlas-lookup.ps1           图集检索：-Outline / -Path / -Query
 ```
 
 ## 五、第三轮增强：主文档从"参考"升为"权威"
@@ -71,3 +76,26 @@ cinematic-prompt-master/
 
 - 直接说"用镜语写一条 XX 的提示词"即可触发；
 - 或者点名"按七层拼装法写"、"锁这个人物的三视图"、"给我这条视频的负面词"。
+- 换平台就说"改成 MiniMax H3 的格式，带原生音频"；多镜就说"拆成 8 个镜头，站位别漂"。
+
+## 七、第四轮增强：双平台 + 站位 + 图集 + 升维
+
+本轮解决四个此前没覆盖的痛点：**只会写 Seedance**、**多镜必换人**、**记不清库里有啥词**、**改稿没有标准**。
+
+| 项 | 上一版 | 现在 |
+|---|---|---|
+| 平台 | Seedance 2.0 为主，H3 只一句"中文自然句" | **双平台一等公民**：Seedance 2.0 与 MiniMax H3 各一套完整语法壳 + 7 列平台矩阵 + 模式 H 跨平台改写 |
+| H3 深度 | 无 | 新增 `references/12`：五模式（T2VA/I2VA/FL2VA/L2VA/Ref2VA）、三段式与六段式字段、15 条方括号运镜、时间戳规范、音频三轨、负面转正三法、时长密度表、迁移矩阵、12 条失败清单、4 份开箱模板 |
+| 站位 | 完全没写 | 新增 `references/13`：三个独立变量、固定物坐标蓝图、180° 轴线、机位表、屏幕侧位、首尾态逐字接力、参考图链与槽位绑定、比例锚、穿模分离、切点类型、站位卡模板、崩坏 10 例；SKILL 里给轻量三句式 |
+| 词库形态 | 只有主文档 + 速查卡 | 并入 atlas（`master/prompt-atlas.json`，279 叶子 / 7400+ 枚举），配 `atlas-lookup.ps1` 与 `references/14`；语料升成 P0/P1/P1.5/P2/P3 五级 |
+| 优化方式 | 模式 D 只给"病因表" | **六维体检（30 分制，交付线 26）+ 五级手术**（拆裸词→落光学→补介质→补因果→收预算），附 60/80/95 三档对照 |
+| 模式 | 六种 | 八种（新增 G 分镜站位、H 平台改写） |
+| 交付契约 | 定妆块 + 提示词块 | 增加站位行与 H3 专属结构块（三字段逐字保留），并规定英文版逐句对照、不许增删 |
+| 质检 | 14 条通用 | 拆成通用 / 图像 / 视频 / Seedance / H3 / 多镜六组，H3 单列 9 条 |
+
+**新增文件**：`references/12-platform-minimax-h3.md`（389 行）、`references/13-staging-and-axis.md`（380 行）、`references/14-prompt-atlas.md`（150 行）、`master/prompt-atlas.json`、`scripts/atlas-lookup.ps1`。
+
+**改动文件**：`SKILL.md`（重写，含平台矩阵、升维流程、站位速查）、`references/00`（五级语料协议 + atlas 入口）、`references/10`（H3 语法壳 + 四栏迁写）、`references/11`（八模式 + 模式 G/H 工序）、`README.md`、`UPGRADE.md`。
+
+**H3 口径来源**：MiniMax 官方 API 文档（模型名 `MiniMax-Hailuo-2.3 / MiniMax-Hailuo-02 / *-Director`，15 条 `[指令]` 运镜语法，prompt ≤2000 字符），与公开提示词工程实践（三段式字段、原生音频分轨、首末帧保留契约）交叉核对；`references/12` 内所有硬指标均可回溯到这两类来源。
+
