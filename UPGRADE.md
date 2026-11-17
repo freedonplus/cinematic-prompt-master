@@ -37,22 +37,37 @@ seedance 原有的"品质锚定 / 大气连贯声明 / 光影三层 / 收束句 
 
 ```
 cinematic-prompt-master/
-├── SKILL.md                       # 七层公式 + 三法则 + 工作流 + 质检清单
+├── SKILL.md                       # 语料优先级协议 + 七层公式 + 三法则 + 六模式 + 工作流 + 质检
 ├── UPGRADE.md                     # 本文件
-└── references/
-    ├── 01-style-and-medium.md     风格母语 / 介质 / 三叠法
-    ├── 02-culture-themes.md       古风武侠 / 赛博科幻 / 和风 / 港风民国 / 恐怖
-    ├── 03-subject-and-consistency.md 五官 / 表情眼神 / 人体质感 / 三视图一致性
-    ├── 04-scene-and-time.md       年代 / 时刻 / 天气 / 建筑 / 环境影与纵深
-    ├── 05-camera-and-light.md     焦段 / 光圈快门 / 机位构图 / 光位光比 / 打光配方
-    ├── 06-color-and-texture.md    影调 / Look / 材质 / 织物 / 胶片 / 片质八轴
-    ├── 07-video-motion.md         运镜 / 速度 / 动作 / 打斗 / 物理一致性 / 分段
-    ├── 08-sound-and-edit.md       音景 / 人声 / 安静 / 剪辑 / 转场
-    ├── 09-fx-and-animation.md     特效 FX 控量 / 动画载体与专属符号
-    └── 10-platform-and-negative.md 画幅 / 平台语法壳 / 八域负面
+├── master/
+│   └── AI图像视频生成提示词_超细分主文档.md   # P0 权威语料（26 卷 / 7626 行，与原版同哈希）
+├── references/
+│   ├── 00-master-index.md         # 总索引：26 卷地图 / 按词路由 / Grep 指令集 / 兜底规则
+│   ├── 01-style-and-medium.md     风格母语 / 介质 / 三叠法
+│   ├── 02-culture-themes.md       古风武侠 / 赛博科幻 / 和风 / 港风民国 / 恐怖
+│   ├── 03-subject-and-consistency.md 五官 / 表情眼神 / 人体质感 / 三视图一致性
+│   ├── 04-scene-and-time.md       年代 / 时刻 / 天气 / 建筑 / 环境影与纵深
+│   ├── 05-camera-and-light.md     焦段 / 光圈快门 / 机位构图 / 光位光比 / 打光配方
+│   ├── 06-color-and-texture.md    影调 / Look / 材质 / 织物 / 胶片 / 片质八轴
+│   ├── 07-video-motion.md         运镜 / 速度 / 动作 / 打斗 / 物理一致性 / 分段
+│   ├── 08-sound-and-edit.md       音景 / 人声 / 安静 / 剪辑 / 转场
+│   ├── 09-fx-and-animation.md     特效 FX 控量 / 动画载体与专属符号
+│   ├── 10-platform-and-negative.md 画幅 / 平台语法壳 / 八域负面
+│   └── 11-modes-and-recipes.md    六模式 / 十二张配方卡 / 变奏矩阵 / 混搭规则 / 输出形态
+└── scripts/
+    └── lookup-master.ps1          主文档检索：-Outline / -Volume / -Query
 ```
 
-## 五、怎么用
+## 五、第三轮增强：主文档从"参考"升为"权威"
+
+| 项 | 首版 | 现在 |
+|---|---|---|
+| 语料地位 | 主文档压缩成 10 本速查卡，原文档不入库 | 主文档整卷入库为 **P0**，速查卡降为 P1，冲突听 P0 |
+| 取词方式 | 靠速查卡记忆 | **查索引定位卷 → 取原句照抄 → 抄不到降级标 `[自创]`**，配检索脚本 |
+| 用法 | 单一"组装" | 六种模式（组装/复刻/延展/诊断/取词/拆解）+ 十二张配方卡 + 变奏矩阵 |
+| 输出 | 分栏一种 | 七种形态（分栏/卡片/双栏对照/JSON/剧本/ABC 三变体/速查表） |
+
+## 六、怎么用
 
 - 直接说"用镜语写一条 XX 的提示词"即可触发；
 - 或者点名"按七层拼装法写"、"锁这个人物的三视图"、"给我这条视频的负面词"。
