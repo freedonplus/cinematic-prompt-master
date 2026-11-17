@@ -1,6 +1,6 @@
 # cinematic-prompt-master · 镜语
 
-工种级 AI 提示词工程技能（**图像 + 视频一体**）：用「七层拼装法 + 三条翻译法则」，把一句创意写成可直接投喂 Seedance 2.0 / 即梦 / Seedream / 可灵 / Midjourney / SD / Flux / Veo / Sora 的中英文提示词。
+工种级 AI 提示词工程技能（**图像 / 视频一体**）：以 26 卷《AI 图像视频生成提示词·超细分主文档》为权威语料，用「七层拼装法 + 三条翻译法则」，把一句创意写成可直接投喂 Seedance 2.0 / 即梦 / Seedream / 可灵 / Midjourney / SD / Flux / Veo / Sora 的中英文提示词；交付固定为「先定妆块、后提示词块」的 text 代码块。
 
 设计目标：**写得出具体、排得对顺序、锁得住人、去得掉 AI 味、查得到词。**
 
