@@ -4,12 +4,14 @@ description: >
   工种级 AI 提示词工程技能（图像 / 视频一体，中文优先，双平台一等公民）。以 26 卷《AI 图像视频生成提示词·超细分主文档》
   为权威语料（P0，先取原句再动笔）、atlas 图集为可填槽位词库（7400+ 枚举选项），用「七层拼装法（风格母语·题材套路·时空天气·
   主体·场景·光学·调色片质）+ 三条翻译法则（载体化·光学化·介质化）」把一句创意写成可直接投喂 Seedance 2.0（@图片N 引用 +
-  中文句式）与 MiniMax H3 / 海螺 Hailuo（integrated_multimodal_description 三段式 + 方括号运镜 + 时间戳 + 原生音轨）的
+  中文句式）与 MiniMax H3 / 海螺 Hailuo（六段式 subject_definitions → summary → retention_analysis →
+  detailed_description → overall_soundscape → non_diegetic_music + 尖括号标签 + 台词锁 `(Sx)` + 时间戳 + 原生音轨）的
   中英文提示词；同时覆盖 Midjourney / SD / Flux / 可灵 / Veo / Sora 的语法壳迁移。内置「定妆块 → 提示词块」交付契约、
   站位与轴线工程（空间蓝图·轴线·机位表·屏幕侧位·首尾态接力·比例锚，跨镜不漂）、提示词升维五级手术（六维评分卡，
   把 60 分稿改到 90 分）。提供组装 / 复刻 / 系列延展 / 诊断修复 / 词库抽取 / 拆解教学 / 分镜站位 / 跨平台改写八种工作模式。
   当用户提到：提示词、prompt、写提示词、优化提示词、生图、文生图、图生图、视频提示词、文生视频、图生视频、MiniMax、
   H3、海螺、Hailuo、Seedance、可灵、Veo、Sora、分镜、故事板、短剧、漫剧、广告片、TVC、角色一致性、三视图、定妆、
+  subject_definitions、retention_analysis、六段式、台词锁、音色参考、
   运镜、打光、布光、调色、质感、材质、负面词、站位、轴线、越轴、机位、首末帧、原生音频，
   或要求「这个画面怎么写提示词」「这段提示词为什么崩」「同一创意两个平台各来一版」时使用。
 ---
@@ -146,16 +148,39 @@ description: >
 
 ---
 
+## 时长核算（内容决定时长，不掺水也不硬压）
+
+分镜的秒数不是配额，是**内容算出来的结果**。同一段内容，5 秒能演完就不许撑成 15 秒，15 秒才演得完也不许压成 5 秒。
+
+| 内容 | 参考秒数 | 算法 |
+|---|---|---|
+| 短对白 2–4 字 | 3–4 s | 字数 ÷ 4.5 + 一个反应拍 |
+| 中等对白 8–12 字 | 5–6 s | 字数 ÷ 4.5 + 呼吸余量 |
+| 长答 15–25 字 | 8–10 s | 字数 ÷ 4.5，不许低于 2 秒/句 |
+| 建立镜头 / 大远景 | 5–7 s | 够主体入画 + 环境看清 |
+| 转身 / 回头 / 推门 | 3–5 s | 起—中—止三拍 |
+| 纯静默走位 | 3–5 s | 超 5 秒必须有一次可见变化量 |
+
+**四条纪律**：
+1. **中文字速按 4–5 字/秒**（漫剧/剧情片偏慢）。一句 12 字要 2.5–3 秒，塞进 1.5 秒切片必被切断。
+2. **不注水**：凑不满就并进相邻组，不许靠静默、空镜、慢推把 5 秒的戏拉到 15 秒。
+3. **不硬压**：内容超了就拆组或延长，别为保住固定时长去砍台词、压走位。
+4. **组时长 = 组内各镜之和**，文件头写一句「时长依据」（哪句多少字、走位几秒）。全局时间轴首尾相接，不留断口。
+
+---
+
 ## 平台矩阵（先判平台，再动笔：同一语义母版，三种语法壳）
 
 | | **Seedance 2.0（即梦）** | **MiniMax H3 / 海螺 Hailuo 3.0** | **通用英文系（MJ / SD / Flux / Veo / Sora / 可灵）** |
 |---|---|---|---|
-| 语言 | 全中文（含生图） | 中英皆可，**结构化字段名用英文** | 英文为主 |
-| 引用语法 | `@图片1`~`@图片9`、`@视频1`~`@视频3`、`@音频1`~`@音频3`，合计 ≤12 | 参考模式最多 9 图 / 3 视频 / 3 音频 = 12，槽位在 `subject_definitions` 里逐个定义 | MJ 无引用，用 `--sref/--cref`；SD 用 ControlNet / IP-Adapter |
-| 运镜 | 中文自然句 + 「一镜到底」等能力句式 | **方括号指令** `[Push in]` `[Pan left]`，一括号 ≤3 个，全镜 2–3 个线索 | 自然语言 `slow dolly in` |
-| 时间结构 | `0-3s：…` 手写时间戳 | `[Shot 1]` + `At 00:04.000,`（毫秒三位） | 段落叙述，不给时间戳 |
-| 音频 | 单独写「音效」「台词」行 | **原生立体声**：`overall_soundscape` + `non_diegetic_music` 字段 | 多数无音频，删掉音轨 |
-| 负面词 | 独立负面块，分域写 | **没有负面字段**：转成「保留契约 + 一句 Avoid 短列表」 | MJ `--no`；SD 独立负面框 |
+| 语言 | 全中文（含生图） | 中英皆可，**六段段名与标签用英文** | 英文为主 |
+| 结构 | 一段散文 + 时间戳 | **六段式**：`subject_definitions` → `summary` → `retention_analysis` → `detailed_description` → `overall_soundscape` → `non_diegetic_music` | 一段散文 |
+| 引用语法 | `@图片1`~`@图片9`、`@视频1`~`@视频3`、`@音频1`~`@音频3`，合计 ≤12 | **尖括号标签** `<Subject N>` `<Picture N>` `<Video N>` `<Audio N>`，按上传槽位编号；配额 9 图 / 3 视频 / 3 音频 / 合计 12 | MJ 无引用，用 `--sref/--cref`；SD 用 ControlNet / IP-Adapter |
+| 运镜 | 中文自然句 + 「一镜到底」等能力句式 | **英文句式** `Push In with small amplitude at slow speed`（或方括号 `[Push in]`），单镜 2–3 个线索 | 自然语言 `slow dolly in` |
+| 时间结构 | `0-3s：…` 手写时间戳 | `[Shot 1]` **不带时间** + 后续 `[Shot 2] At 00:04.000,`（毫秒三位） | 段落叙述，不给时间戳 |
+| 台词 | 引号 + 角色 + 情绪 | **三块锁死**：`<Subject N> (Sx) says, <d>[Chinese] …</d>`，(Sx) 按本组开口顺序 | 引号 + 说话人 |
+| 音频 | 单独写「音效」「台词」行 | **原生立体声**：`overall_soundscape` + `non_diegetic_music`；音色参考走 `<Audio N>` + `[audio reference]` | 多数无音频，删掉音轨 |
+| 负面词 | 独立负面块，分域写 | **没有负面字段**：转成「保留契约 + 一句 Avoid」；有独立负向栏则放文末附录 | MJ `--no`；SD 独立负面框 |
 | 时长上限 | 单次 ≤15s，超出分段延长 | 单次 4–15s，默认 6s，2K/768P、24fps | Veo/Sora 5–8s 起；MJ/SD 是静帧 |
 | 生图限制 | **不得含写实真人面部素材**（平台拦截） | 允许真人参考，靠 `retention_analysis` 保身份 | 各自合规策略 |
 
@@ -178,7 +203,7 @@ description: >
 | **H 平台改写** | "改成 H3 的格式 / Seedance 转海螺" | 双语壳双版本 + 迁移说明 | 语义零改写、槽位与限制对齐 |
 
 速判：无素材→A（或先 E 取词）；有素材改细节→B、扩系列→C；写坏了→D；要教人→F；多镜成套→G；换模型→H。
-**十二张现成配方卡（雨夜追车/雪中剑客/仙侠/义体诊所/港风茶餐厅/民国旗袍/恐怖门缝/产品广告/美食/动画热血/黏土定格/黑白街头）与变奏矩阵见 `references/11-modes-and-recipes.md`；H3 四份开箱模板见 `references/12` 第十四节；站位卡模板见 `references/13` 第十一节。**
+**十二张现成配方卡（雨夜追车/雪中剑客/仙侠/义体诊所/港风茶餐厅/民国旗袍/恐怖门缝/产品广告/美食/动画热血/黏土定格/黑白街头）与变奏矩阵见 `references/11-modes-and-recipes.md`；H3 四份开箱模板见 `references/12` 第十五节；站位卡模板见 `references/13` 第十一节。**
 
 **与 storyboard-sheet 的分工**：模式 G 只产出镜头单与逐镜提示词（文本层）；要把镜头单**真的出成分镜拼板图**（逐格生成、静态校验 `validate-shots.ps1`、参考图链、溯源回写、拼板叠字），交给 `storyboard-sheet` 技能——两边站位卡同源（`references/13` 站位卡模板即其内容卡站位卡）、atlas 词库同源（`master/prompt-atlas.json`）、六维体检同表。反向同理：那边过质检的分镜板要动起来，按其动态化模式展开成双平台视频提示词，语法壳回到本技能 `references/12` 口径。
 
@@ -294,19 +319,37 @@ description: >
 ### D. 视频（>15s）
 分段生成 + 延长拼接；每段写清「衔接点」（前一镜最后一帧的构图/动作相位/光源位置）→ 见 `references/07`。
 
-### E. 视频（MiniMax H3 壳，三段式）
+### E. 视频（MiniMax H3 壳，六段式）
 ```text
-integrated_multimodal_description:
-[Shot 1] [风格 + 时空 + 场景]，[主体具名长相]，[动作起势]，[Push in]，[光位与片质]。
-[Shot 2] At 00:04.000, [动作中段 + 新变化量]，[Pan right]，[台词（标注说话人）]。
-[Shot 3] At 00:07.000, [收势定格 + 末态构图]。
-overall_soundscape: [环境底噪] + [动作声] + [呼吸/衣料]。
-non_diegetic_music: [配乐走向] / N/A
+subject_definitions:
+<Subject 1> is the [人/物/环境] in <Picture 1>, with [1–3 个可见特征].
+<Picture 1> ...
+
+summary:
+[reference generation] 一句话讲清这条片达成什么。
+
+retention_analysis:
+<Subject 1> (appears in [Shot 1], [Shot 2]): fully_preserved - 保留什么、改什么。
+<Picture 1> ([Shot 1] 到 [Shot 2]): fully_preserved - 多视图只锁定同一个人，不把三视图排进画面。
+
+detailed_description:
+1–2 句整体风格（调色 · 片质 · 光比）。
+[Shot 1] 景别 + 主体动作起势 + 运镜 + 光位。
+[Shot 2] At 00:04.000, 动作中段 + 新变化量 + 运镜 + 台词三块式。
+
+overall_soundscape:
+[环境底噪] + [动作声] + [呼吸/衣料]。
+
+non_diegetic_music:
+N/A
 ```
-- 全镜方括号运镜 **2–3 个**，单括号 ≤3 个指令，多个括号按出现顺序执行。
-- 时长写死（4–15s），时间戳累加等于总时长，秒后三位小数。
-- 没有负面字段：把禁止项写成「保留契约 + 一句 Avoid」。
-- 台词用引号 + 说话人 + 情绪，且给足秒数（5s 切片塞不下 20 字长句）。
+- **六段段名英文、不翻译、不调序**；中文只写段内叙述。
+- **标签用尖括号**：`<Subject N>` 是"演员"（可反复用的可见内容），`<Picture N>` 是"剧照"（某帧/构图锚点），编号按上传槽位。
+- **台词三块挨一起**：`<Subject N> (Sx) says, <d>[Chinese] 台词</d>`。漏 `(Sx)` = 话被安到别人身上或变成无人张嘴的旁白。
+- **第一镜不带时间戳**，后续 `At 00:04.000`；时间戳累加 = 总时长。
+- 运镜写英文句式 `Push In with small amplitude at slow speed`（或方括号 `[Push in]`），单镜 2–3 个线索，两种壳不混用。
+- 时长 4–15s 显式写死；**总时长按内容核算**，不按 15 秒配额倒推。
+- 没有负面字段：禁止项转成正向保留句 + 一句 `Avoid`；平台有独立负向栏时放文末附录，不混进六段。
 
 ---
 
@@ -419,17 +462,39 @@ H3 无负面框，这些条款直接写成正向句子（`五指完整、关节�
 【成品提示词】（上面所有层压成一段，可直接复制粘贴）
 ```
 
-**MiniMax H3 版（结构不同，字段名必须逐字保留）：**
+**MiniMax H3 版（六段式，段名与标签逐字保留）：**
 ```text
-【定妆】…
+【上传对照】
+<Picture 1> = 传什么｜校验：…
+<Picture 2> = 传什么｜校验：…
+
 【提示词 · MiniMax H3】
-integrated_multimodal_description:
+subject_definitions:
+<Subject 1> is the … in <Picture 1>, with …
+<Audio 1> is the voice-timbre reference for <Subject 1> (S1).
+
+summary:
+[reference generation] …
+
+retention_analysis:
+<Subject 1> (appears in [Shot 1], [Shot 2]): fully_preserved - …
+<Picture 1> ([Shot 1] 到 [Shot 2]): fully_preserved - 多视图只锁定同一个人，不把三视图排进画面。
+
+detailed_description:
+整体风格一句。
 [Shot 1] …
 [Shot 2] At 00:04.000, …
-overall_soundscape: …
-non_diegetic_music: N/A
+<Subject 1> (S1) says, <d>[Chinese] 台词</d>
+
+overall_soundscape:
+…
+
+non_diegetic_music:
+N/A
 ```
+- **定妆块可以退化为上传对照表**：定妆面板/三视图已经出图时，不要把人家长相再写一遍，只写槽位 + 校验点 + `<Subject N>` 的 1–2 句锚点。
 - 需要英文版时，另起一个 `text` 块给同样结构的英文稿，**语义不许再加不许再减**。
+- 平台另有独立负向栏时，负向放在六段**之外**的附录，正文保持整段可直接复制。
 - 首帧/末帧任务在定妆块里补一行：`首帧：图片1（仅提供身份与构图起点）`、`末帧：图片2（仅提供终态构图）`。
 
 **短视频额外给**：`【时间戳分镜】0-3s / 3-7s / …` + `【音效】` + `【台词】`（台词用引号、标角色与情绪，单独成段）。
@@ -447,9 +512,11 @@ non_diegetic_music: N/A
 
 **Step 3 拼装**：套公式 → 三条法则逐条过关（每出现一个裸风格词就拆）→ 预算内砍词。
 
+**Step 3.5 算时长**：按「4–5 字/秒 + 走位余量」逐镜核算，组时长 = 各镜之和；凑不满就并组，装不下就拆组，禁止用静默凑数。
+
 **Step 4 站位**：≥2 镜先填站位卡（`references/13` 第十一节），再逐镜写；单镜走三句式。
 
-**Step 5 套壳**：按平台矩阵换语法（Seedance @引用 / H3 三段式 + 方括号 / 通用英文）。
+**Step 5 套壳**：按平台矩阵换语法（Seedance @引用 / H3 六段式 + 尖括号标签 + `(Sx)` 台词锁 / 通用英文）。
 
 **Step 6 自检**：过下面的清单 + 六维体检（≥26 分），不过就改，别交付。
 
@@ -481,15 +548,19 @@ non_diegetic_music: N/A
 - [ ] 负面词分域（人体/结构/文字水印/画质/画风）至少 3 域
 
 **MiniMax H3 专属**
-- [ ] 三个字段名逐字正确：`integrated_multimodal_description` / `overall_soundscape` / `non_diegetic_music`
-- [ ] 模式判定正确（T2VA / I2VA / FL2VA / L2VA / Ref2VA），首末帧任务写了图片对齐与保留契约
-- [ ] 时间戳累加 = 总时长，秒后三位小数；单镜 ≥2 个 beat
-- [ ] 方括号运镜 ≤3 个线索/镜，单括号 ≤3 指令，全部用官方英文命名
-- [ ] 台词有说话人 + 情绪 + 足够秒数；`overall_soundscape` 没有复述整句台词
-- [ ] 配乐不需要时写 `N/A`，没写 "no music"
-- [ ] 全文 ≤2000 字符（留 200 余量）
-- [ ] 禁止项已转成正向保留句 + 一句 `Avoid` 短列表
-- [ ] 需要精确控制时注明了 `prompt_optimizer: false`
+- [ ] 六段段名逐字正确且不调序：`subject_definitions` / `summary` / `retention_analysis` / `detailed_description` / `overall_soundscape` / `non_diegetic_music`
+- [ ] `summary` 带任务类型方括号（有图 = `[reference generation]`；只借音色 = `[audio reference]`；整段原声 = `[audio reuse]`）
+- [ ] 标签全用尖括号 `<Subject N>` `<Picture N>` `<Video N>` `<Audio N>`，槽位号与上传对照表一致，没有中文「图1」
+- [ ] 每句台词都是三块挨一起：`<Subject N> (Sx) says, <d>[Chinese] …</d>`，无漏 `(Sx)`、无跳号倒序
+- [ ] `retention_analysis` 画面用 `fully_preserved / partially_preserved / attribute_transfer / weak_reference`，音频用 `fully_copy / partially_copy / reference / weak_reference`，两套没混
+- [ ] 每个多视图图标签都补了"只锁定同一个人，不把三视图排进画面"
+- [ ] 第一镜 `[Shot 1]` 不带时间戳，后续 `At 00:04.000` 三位小数，累加 = 总时长
+- [ ] 运镜 2–3 个线索/镜，英文句式或方括号二选一，不混用
+- [ ] 素材 ≤9 图 / 3 视频 / 3 音频 / 合计 12；音频不单独使用；同类时长合计 ≤15s
+- [ ] 音频参考素材双声道、≤10s、干净；有声明的音色归谁
+- [ ] `overall_soundscape` 没有复述整句台词；配乐不需要时写 `N/A`，没写 "no music"
+- [ ] 全文字符 ≤2000（留 200 余量）；需要精控时注明 `prompt_optimizer: false`
+- [ ] 禁止项已转成正向保留句 + 一句 `Avoid`；平台有负向栏时负向在六段之外
 
 **多镜/分镜专属**
 - [ ] 空间蓝图用固定物坐标，删掉"左右前后"仍唯一
@@ -519,11 +590,11 @@ non_diegetic_music: N/A
 | 音景与配乐、剪辑衔接、转场大全 | `references/08-sound-and-edit.md` |
 | 特效 FX、动画片种与动画专属特效 | `references/09-fx-and-animation.md` |
 | 画幅/分辨率/平台语法壳（Seedance / MJ / SD / Veo / Sora / 可灵）、负面词分域大全 | `references/10-platform-and-negative.md` |
-| **MiniMax H3 全部语法壳**：五模式、三段式/六段式、方括号运镜、时间戳、音频三轨、负面转正、迁移矩阵、失败清单、开箱模板 | `references/12-platform-minimax-h3.md` |
+| **MiniMax H3 全部语法壳**：六段式、尖括号标签、`(Sx)` 台词锁、素材配额、保留关系词表、播放顺序写法、时长核算、音频引用、负面转正、迁移矩阵、15 条失败清单、开箱模板、旧三段式兼容 | `references/12-platform-minimax-h3.md` |
 | **站位与轴线**：空间蓝图、轴线定则、机位表、屏幕侧位、首尾态接力、参考链、比例锚、穿模分离、站位卡模板、崩坏 10 例 | `references/13-staging-and-axis.md` |
 | **atlas 图集**：可填槽位协议、结构索引、分卷→七层映射、五种用法 | `references/14-prompt-atlas.md` |
 | **原句、深层表格、中英对照范例（唯一权威）** | `master/AI图像视频生成提示词_超细分主文档.md` |
 | **可填模板词库（279 叶子 / 7400+ 选项）** | `master/prompt-atlas.json` + `scripts/atlas-lookup.ps1` |
 | 主文档检索工具 | `scripts/lookup-master.ps1`（`-Outline` / `-Volume` / `-Query`） |
 
-**跨平台迁写原则**：语义层（画面描述）当母版，语法壳按平台换 —— MJ 用 `/--ar --no`；SD 用权重 + 独立负面框；Sora/Veo 写完整自然语言剧本；可灵/即梦用中文句子 + 面板参数；H3 用三段式字段 + 方括号运镜 + 原生音轨。
+**跨平台迁写原则**：语义层（画面描述）当母版，语法壳按平台换 —— MJ 用 `/--ar --no`；SD 用权重 + 独立负面框；Sora/Veo 写完整自然语言剧本；可灵/即梦用中文句子 + 面板参数；H3 用六段式字段 + 尖括号标签 + `(Sx)` 台词锁 + 原生音轨。

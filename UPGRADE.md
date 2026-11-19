@@ -99,3 +99,26 @@ cinematic-prompt-master/
 
 **H3 口径来源**：MiniMax 官方 API 文档（模型名 `MiniMax-Hailuo-2.3 / MiniMax-Hailuo-02 / *-Director`，15 条 `[指令]` 运镜语法，prompt ≤2000 字符），与公开提示词工程实践（三段式字段、原生音频分轨、首末帧保留契约）交叉核对；`references/12` 内所有硬指标均可回溯到这两类来源。
 
+## 八、第五轮增强：H3 六段式口径重写 + 时长核算
+
+本轮由长片实拍（《极夜十一夜》S01E01 九组镜）暴露的问题驱动：**旧的三段式口径与现行镜像不符**、
+**台词会串台**、**分镜被"15 秒配额"倒推着注水**。四处硬改：
+
+| 项 | 上一版 | 现在 |
+|---|---|---|
+| H3 主格式 | 三段式（`integrated_multimodal_description`）为默认，六段式只给 Ref2VA | **六段式为唯一默认**：`subject_definitions` / `summary` / `retention_analysis` / `detailed_description` / `overall_soundscape` / `non_diegetic_music`；三段式降为旧镜像兼容节 |
+| 标签 | 中文「图1 / 镜头1」混用 | 统一尖括号 `<Subject N>` `<Picture N>` `<Video N>` `<Audio N>` `[Shot N]`；按上传槽位编号，不按素材库节点 |
+| 台词 | "引号 + 说话人 + 情绪" | **三块锁死** `<Subject N> (Sx) says, <d>[Chinese] 台词</d>`；(Sx) 按本组开口顺序，漏写即串台——这是长片里实际踩到的坑 |
+| 素材配额 | 只写"9 图 / 3 视频 / 3 音频" | 补全 **合计 12**、**单段 ≤15s**、**同类合计 ≤15s**、**音频不能单独用**，并给音色参考素材要求（双声道 / ≤10s / 一男一女最稳） |
+| 保留关系 | 一套词通用 | **分两套**：画面 `fully_preserved / partially_preserved / attribute_transfer / weak_reference`；音频 `fully_copy / partially_copy / reference / weak_reference`。并强制"多视图只锁定同一个人，不把三视图排进画面" |
+| 时长 | 层级页给字数预算，密度表给 beat 数 | 新增 **时长核算**节：中文 4–5 字/秒逐镜实测，组时长 = 各镜之和；不注水、不硬压，凑不满并组、装不下拆组 |
+| 参考面板 | 要求写全"具名长相段" | 有定妆面板/三视图时**只写 1–2 句锚点**，长相交给图；重写五官 = 两个信息源打架 |
+| 运镜 | 只认方括号 | 英文句式 `Push In with small amplitude at slow speed` 与方括号并列，**两壳不混用** |
+| 负向 | 只讲"转正 + Avoid" | 补一条：平台另给独立负向栏时，负向放六段**之外**的附录，正文本体必须保持整段可直接复制 |
+| 失败清单 | 12 条 | 15 条，新增"台词串台""定妆面板被画成三个人并排""第 13 个素材无效" |
+
+**验证方式**：以《极夜十一夜》S01E01 九组真实分镜（1:59 总长、25 句台词、六人定妆面板）逐条回测——
+台词合规率 25/25、六段齐备 9/9、每组素材 ≤4 张、时间戳累加与总时长逐组对齐。
+
+**改动文件**：`references/12`（重写，389 → 约 460 行）、`SKILL.md`（H3 骨架、平台矩阵、交付契约、质检、时长核算节、工作流 Step 3.5）、`references/10`（H3 段与四栏迁写示例）、`README.md`、`UPGRADE.md`。
+

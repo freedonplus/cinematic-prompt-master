@@ -171,7 +171,7 @@ Image 2 provides only the kitten's tabby pattern, ear shape and body proportions
 Image 3 provides only the spatial layout, ground contact and light direction from the previous shot; do not copy its composition.
 ```
 
-槽位编号必须与工具实际收到的素材顺序一致：`图片1` = 第一张（Seedance）；H3 用 `Image 1`；Veo/Sora 在素材清单里按同名编号声明。
+槽位编号必须与工具实际收到的素材顺序一致：`@图片1` = 第一张（Seedance）；H3 用 `<Picture 1>`（按上传槽位，不按素材库节点号），并在 `subject_definitions` 里逐个声明；Veo/Sora 在素材清单里按同名编号声明。
 
 ---
 

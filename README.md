@@ -73,11 +73,13 @@
 
 | | Seedance 2.0 | MiniMax H3 / 海螺 3.0 | 通用英文系 |
 |---|---|---|---|
-| 语言 | 全中文 | 中英皆可，字段名英文 | 英文为主 |
-| 引用 | `@图片1`…`@图片9`，合计 ≤12 | 参考模式 9 图 / 3 视频 / 3 音频 | MJ `--sref` / SD ControlNet |
-| 运镜 | 中文自然句 | **`[Push in]` `[Pan left]` 方括号指令** | `slow dolly in` |
-| 时间 | `0-3s：…` | **`[Shot N]` + `At 00:04.000,`** | 段落叙述 |
-| 音频 | 单独「音效/台词」行 | **`overall_soundscape` + `non_diegetic_music`** | 多数无音轨 |
+| 语言 | 全中文 | 中英皆可，段名与标签英文 | 英文为主 |
+| 结构 | 一段散文 + 时间戳 | **六段式** `subject_definitions` → `summary` → `retention_analysis` → `detailed_description` → `overall_soundscape` → `non_diegetic_music` | 一段散文 |
+| 引用 | `@图片1`…`@图片9`，合计 ≤12 | **`<Subject N>` / `<Picture N>`**，按上传槽位；9 图 / 3 视频 / 3 音频 / 合计 12 | MJ `--sref` / SD ControlNet |
+| 运镜 | 中文自然句 | **`Push In with small amplitude at slow speed`**（或方括号） | `slow dolly in` |
+| 时间 | `0-3s：…` | **`[Shot 1]` 不带时间 + `At 00:04.000,`** | 段落叙述 |
+| 台词 | 引号 + 角色 | **`<Subject N> (Sx) says, <d>[Chinese] …</d>`** | 引号 + 说话人 |
+| 音频 | 单独「音效/台词」行 | **`overall_soundscape` + `non_diegetic_music`**（音色参考走 `<Audio N>`） | 多数无音轨 |
 | 负面 | 独立负面块分域 | **无负面字段 → 保留契约 + `Avoid`** | MJ `--no` / SD 负面框 |
 | 时长 | ≤15s | 4–15s，默认 6s，2K/768P、24fps | Veo/Sora 5–8s |
 
@@ -179,17 +181,37 @@
 
 先给 `【定妆】` 块（角色、场景、站位的一致性锁，逐项写死），再给 `【提示词】` 块；两块一律用 `text` 代码块包裹，块内只留可直接复制的文本，解释写在块外。
 
-MiniMax H3 的提示词块结构不同，字段名逐字保留：
+MiniMax H3 的提示词块结构不同，六段段名与尖括号标签逐字保留：
 
 ```text
-【定妆】…
+【上传对照】
+<Picture 1> = 传什么｜校验：…
+
 【提示词 · MiniMax H3】
-integrated_multimodal_description:
+subject_definitions:
+<Subject 1> is the … in <Picture 1>, with …
+
+summary:
+[reference generation] …
+
+retention_analysis:
+<Subject 1> (appears in [Shot 1], [Shot 2]): fully_preserved - …
+<Picture 1> ([Shot 1] 到 [Shot 2]): fully_preserved - 多视图只锁定同一个人，不把三视图排进画面。
+
+detailed_description:
+整体风格一句。
 [Shot 1] …
 [Shot 2] At 00:04.000, …
-overall_soundscape: …
-non_diegetic_music: N/A
+<Subject 1> (S1) says, <d>[Chinese] 台词</d>
+
+overall_soundscape:
+…
+
+non_diegetic_music:
+N/A
 ```
+
+定妆面板 / 三视图已经出图时，`【定妆】` 块退化为上传对照表：不重写长相，只写槽位、校验点和 `<Subject N>` 的 1–2 句锚点。
 
 ## 目录结构
 
@@ -212,7 +234,7 @@ references/
   09-fx-and-animation.md       特效控量 / 动画载体与专属符号
   10-platform-and-negative.md  画幅 / 平台语法壳（含 H3 与四栏迁写）/ 八域负面
   11-modes-and-recipes.md      八种模式 / 十二张配方卡 / 变奏矩阵 / 混搭规则 / 输出形态
-  12-platform-minimax-h3.md    H3 全部语法壳：五模式 / 三段式·六段式 / 方括号运镜 / 音轨 / 迁移 / 失败清单
+  12-platform-minimax-h3.md    H3 全部语法壳：六段式 / 标签 / 台词锁 / 配额 / 音轨 / 时长核算 / 迁移 / 失败清单
   13-staging-and-axis.md       站位与轴线：蓝图 / 机位表 / 侧位 / 接力 / 参考链 / 比例锚 / 站位卡
   14-prompt-atlas.md           atlas 协议、结构索引、分卷→七层映射、用法
 scripts/
@@ -262,12 +284,14 @@ scripts/
 
 **MiniMax H3**
 
-1. 三个字段名逐字写：`integrated_multimodal_description` / `overall_soundscape` / `non_diegetic_music`。
-2. 参考模式六段式：`subject_definitions` / `summary` / `retention_analysis` / `detailed_description` / `overall_soundscape` / `non_diegetic_music`。
-3. prompt ≤2000 字符；4–15 秒；2K/768P；24fps。
-4. 方括号运镜用官方英文命名，单括号 ≤3 个指令，全镜 2–3 个线索。
-5. 没有负面字段：禁止项写成保留契约 + 一句 `Avoid`；不要写 "no music"，不需要配乐写 `N/A`。
-6. 要精确控制结构时设 `prompt_optimizer: false`。
+1. 六段段名逐字写、不翻译、不调序：`subject_definitions` / `summary` / `retention_analysis` / `detailed_description` / `overall_soundscape` / `non_diegetic_music`。旧镜像只认三段式时用 `integrated_multimodal_description` 顶替（见 `references/12` 第十六节）。
+2. 标签用尖括号：`<Subject N>`（可反复引用的可见内容）/ `<Picture N>` `<Video N>` `<Audio N>`（按上传槽位）/ `[Shot N]`。
+3. 台词三块挨一起：`<Subject N> (Sx) says, <d>[Chinese] 台词</d>`；(Sx) 按本组开口顺序，不跳号不倒序，齐声用 `say`。
+4. 配额：9 图 / 3 视频 / 3 音频 / 合计 12；单段 ≤15 秒、同类合计 ≤15 秒；音频不能单独使用。
+5. prompt ≤2000 字符；4–15 秒；2K/768P；24fps。
+6. 第一镜 `[Shot 1]` 不带时间戳，后续 `At 00:04.000`；运镜英文句式或方括号二选一，单镜 2–3 个线索。
+7. 没有负面字段：禁止项写成保留契约 + 一句 `Avoid`；不要写 "no music"，不需要配乐写 `N/A`。
+8. 要精确控制结构时设 `prompt_optimizer: false`。
 
 ## 素材来源
 
@@ -275,7 +299,7 @@ scripts/
 - **atlas 词库**：`master/prompt-atlas.json`，由用户提供的可填模板 JSON 原样纳入（370,408 字节），未重新序列化。
 - **速查卡（01–10）**：从上述主文档压缩重组，保留可抄原句与关键表格。
 - **配方层（11）**：在主文档词库之上新增的组合法、变奏矩阵与输出形态，不引入新的具名词。
-- **H3 模块（12）**：MiniMax 官方 API 文档（含 15 条方括号运镜与 2000 字符上限）+ 公开提示词工程实践交叉核对。
+- **H3 模块（12）**：MiniMax 镜像实战规范（六段式字段、尖括号标签、`(Sx)` 台词锁、9/3/3/12 配额、音色参考要求）+ 官方 API 文档（2000 字符上限、24fps、2K/768P）交叉核对；旧三段式口径保留为兼容节。
 - **站位模块（13）**：移植自 `storyboard-sheet` 的衔接体系，重写为提示词语言。
 - **平台规则与十种能力句式**：Seedance 2.0 官方文档口径。
 - **工程结构**：与 `storyboard-sheet` 同源，保持"入口 + 词库 + 脚本"的组织方式。
